@@ -4,9 +4,16 @@ import authRouter from "./routes/auth.route.js";
 import connectToDatabase from "./database/mongodb.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = e();
-
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(e.json());
 app.use(e.urlencoded({ extended: false }));
 app.use(cookieParser());

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -8,12 +8,16 @@ const Signup = () => {
     password: "",
   });
 
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate(); // Hook for navigation
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
     try {
       const response = await fetch(
         "http://localhost:5000/api/v1/auth/sign-up",
@@ -28,6 +32,13 @@ const Signup = () => {
 
       const result = await response.json();
       console.log("Success", result);
+
+      if (response.ok) {
+        setMessage("Signup successful! Redirecting...");
+        setTimeout(() => navigate("/signin"), 2000); // Redirect after 2 sec
+      } else {
+        setMessage(result.message || "Signup failed. Try again.");
+      }
     } catch (error) {
       console.log("Error:", error);
     }
@@ -39,6 +50,11 @@ const Signup = () => {
         <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">
           Sign Up
         </h2>
+        {message && (
+          <p className="text-center text-green-600 font-medium mb-4">
+            {message}
+          </p>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label

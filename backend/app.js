@@ -5,6 +5,7 @@ import connectToDatabase from "./database/mongodb.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import productsRouter from "./routes/products.route.js";
 
 const app = e();
 app.use(
@@ -19,6 +20,7 @@ app.use(e.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/products", productsRouter)
 
 app.use(errorMiddleware);
 

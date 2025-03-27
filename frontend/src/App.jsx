@@ -9,6 +9,7 @@ import About from "./pages/About";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import { AuthProvider, useAuth } from "./context/authContext";
+import ProductDetail from "./pages/ProductDetail";
 
 const PrivateRoute = ({ element }) => {
   const { isLoggedIn } = useAuth();
@@ -25,6 +26,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<PrivateRoute element={<Home />} />} />
+          <Route path="/product/:id" element={<PrivateRoute element={<ProductDetail />} />} />
           <Route path="/men" element={<PrivateRoute element={<Men />} />} />
           <Route path="/women" element={<PrivateRoute element={<Women />} />} />
           <Route path="/kids" element={<PrivateRoute element={<Kids />} />} />
